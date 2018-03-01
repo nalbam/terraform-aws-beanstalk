@@ -4,7 +4,7 @@ variable region {
 
 variable "name" {
   default = "demo"
-  description = "Solution name, e.g. 'app' or 'jenkins'"
+  description = "Solution name, e.g. 'app' or 'demo'"
 }
 
 variable "stage" {

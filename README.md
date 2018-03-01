@@ -1,1 +1,1 @@
-# tf-aws-beanstalk
+# terraform-aws-beanstalk-environment
