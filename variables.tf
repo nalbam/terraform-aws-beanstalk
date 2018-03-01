@@ -155,10 +155,10 @@ variable "notification_topic_name" {
   description = "Notification topic name"
 }
 
-variable "aws_iam_role_ec2_id" {
-  //default = ""
-  description = "Instance IAM ec2 role id"
-}
+//variable "aws_iam_role_ec2_id" {
+//  //default = ""
+//  description = "Instance IAM ec2 role id"
+//}
 
 variable "tags" {
   type = "map"
