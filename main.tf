@@ -245,16 +245,7 @@ resource "aws_elastic_beanstalk_environment" "default" {
     name = "DeploymentPolicy"
     value = "Rolling"
   }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name = "BASE_HOST"
-    value = "${var.name}"
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name = "CONFIG_SOURCE"
-    value = "${var.config_source}"
-  }
+
   setting {
     namespace = "aws:elasticbeanstalk:managedactions"
     name = "ManagedActionsEnabled"
@@ -265,6 +256,7 @@ resource "aws_elastic_beanstalk_environment" "default" {
     name = "PreferredStartTime"
     value = "Sun:10:00"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:managedactions:platformupdate"
     name = "UpdateLevel"
@@ -277,6 +269,23 @@ resource "aws_elastic_beanstalk_environment" "default" {
   }
 
   ###===================== Application ENV vars ======================###
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name = "ENV_NAME"
+    value = "${var.name}"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name = "ENV_STAGE"
+    value = "${var.stage}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name = "CONFIG_SOURCE"
+    value = "${var.config_source}"
+  }
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
