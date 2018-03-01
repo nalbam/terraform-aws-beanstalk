@@ -37,7 +37,7 @@ variable "vpc_id" {
 }
 
 variable "associate_public_ip_address" {
-  default = "false"
+  default = "true"
   description = "Specifies whether to launch instances in your VPC with public IP addresses."
 }
 
