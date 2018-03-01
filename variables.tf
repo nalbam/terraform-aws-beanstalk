@@ -164,10 +164,10 @@ variable "notification_topic_name" {
 //  description = "Instance IAM ec2 role id"
 //}
 
-variable "tags" {
+variable "env_vars" {
   type = "map"
   default = {}
-  description = "Additional tags (e.g. map(`BusinessUnit`,`XYZ`)"
+  description = "Map of custom ENV variables to be provided to the Jenkins application running on Elastic Beanstalk, e.g. `env_vars = { JENKINS_USER = 'admin' JENKINS_PASS = 'xxxxxx' }`"
 }
 
 variable "env_default_key" {
@@ -176,12 +176,6 @@ variable "env_default_key" {
 }
 
 variable "env_default_value" {
-  default = "UNSET"
+  default = "EMPTY"
   description = "Default ENV variable value for Elastic Beanstalk `aws:elasticbeanstalk:application:environment` setting"
-}
-
-variable "env_vars" {
-  type = "map"
-  default = {}
-  description = "Map of custom ENV variables to be provided to the Jenkins application running on Elastic Beanstalk, e.g. `env_vars = { JENKINS_USER = 'admin' JENKINS_PASS = 'xxxxxx' }`"
 }
