@@ -100,7 +100,7 @@ variable "autoscale_max" {
 }
 
 variable "http_listener_enabled" {
-  default = "false"
+  default = "true"
   description = "Enable port 80 (http)"
 }
 
