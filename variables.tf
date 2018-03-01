@@ -90,12 +90,12 @@ variable "keypair" {
 }
 
 variable "autoscale_min" {
-  default = "2"
+  default = "1"
   description = "Minumum instances in charge"
 }
 
 variable "autoscale_max" {
-  default = "3"
+  default = "4"
   description = "Maximum instances in charge"
 }
 
