@@ -36,13 +36,13 @@ variable "associate_public_ip_address" {
   description = "Specifies whether to launch instances in your VPC with public IP addresses."
 }
 
-variable "public_subnets" {
+variable "public_subnet_ids" {
   type = "list"
   //default = []
   description = "List of public subnets to place Elastic Load Balancer"
 }
 
-variable "private_subnets" {
+variable "private_subnet_ids" {
   type = "list"
   //default = []
   description = "List of private subnets to place EC2 instances"
@@ -68,7 +68,7 @@ variable "autoscale_upper_bound" {
   description = "Maximum level of autoscale metric to remove instance"
 }
 
-variable "security_groups" {
+variable "security_group_ids" {
   type = "list"
   //default = []
   description = "List of security groups"

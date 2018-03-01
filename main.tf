@@ -31,13 +31,13 @@ resource "aws_elastic_beanstalk_environment" "default" {
   setting {
     namespace = "aws:ec2:vpc"
     name = "Subnets"
-    value = "${var.private_subnets}"
+    value = "${join(",", var.private_subnet_ids)}"
   }
 
   setting {
     namespace = "aws:ec2:vpc"
     name = "ELBSubnets"
-    value = "${var.public_subnets}"
+    value = "${join(",", var.public_subnet_ids)}"
   }
 
   setting {
@@ -97,7 +97,7 @@ resource "aws_elastic_beanstalk_environment" "default" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name = "SecurityGroups"
-    value = "${join(",", var.security_groups)}"
+    value = "${join(",", var.security_group_ids)}"
   }
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
