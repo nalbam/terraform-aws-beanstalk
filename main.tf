@@ -241,36 +241,36 @@ resource "aws_elastic_beanstalk_environment" "default" {
     value = "enhanced"
   }
 
-  // Fixed, Percentage
-  setting {
-    namespace = "aws:elasticbeanstalk:command"
-    name = "BatchSizeType"
-    value = "Fixed"
-  }
-  // 1, 30
-  setting {
-    namespace = "aws:elasticbeanstalk:command"
-    name = "BatchSize"
-    value = "1"
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:command"
-    name = "DeploymentPolicy"
-    value = "Rolling"
-  }
+  //  // Fixed, Percentage
+  //  setting {
+  //    namespace = "aws:elasticbeanstalk:command"
+  //    name = "BatchSizeType"
+  //    value = "Fixed"
+  //  }
+  //  // 1, 30
+  //  setting {
+  //    namespace = "aws:elasticbeanstalk:command"
+  //    name = "BatchSize"
+  //    value = "1"
+  //  }
+  //  setting {
+  //    namespace = "aws:elasticbeanstalk:command"
+  //    name = "DeploymentPolicy"
+  //    value = "Rolling"
+  //  }
 
-  // true, false
-  setting {
-    namespace = "aws:elasticbeanstalk:managedactions"
-    name = "ManagedActionsEnabled"
-    value = "false"
-  }
-  // Sun:10:00, ""
-  setting {
-    namespace = "aws:elasticbeanstalk:managedactions"
-    name = "PreferredStartTime"
-    value = ""
-  }
+  //  // true, false
+  //  setting {
+  //    namespace = "aws:elasticbeanstalk:managedactions"
+  //    name = "ManagedActionsEnabled"
+  //    value = "false"
+  //  }
+  //  // Sun:10:00, ""
+  //  setting {
+  //    namespace = "aws:elasticbeanstalk:managedactions"
+  //    name = "PreferredStartTime"
+  //    value = ""
+  //  }
 
   setting {
     namespace = "aws:elasticbeanstalk:managedactions:platformupdate"
