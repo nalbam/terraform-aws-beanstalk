@@ -157,7 +157,7 @@ variable "notification_topic_name" {
 
 variable "aws_iam_role_ec2_id" {
   //default = ""
-  description = "Notification topic name"
+  description = "Instance IAM ec2 role id"
 }
 
 variable "tags" {
