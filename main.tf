@@ -272,17 +272,15 @@ resource "aws_elastic_beanstalk_environment" "default" {
     value = ""
   }
 
-  // true, false
   setting {
     namespace = "aws:elasticbeanstalk:managedactions:platformupdate"
     name = "InstanceRefreshEnabled"
-    value = "false"
+    value = "true"
   }
-  // minor, ""
   setting {
     namespace = "aws:elasticbeanstalk:managedactions:platformupdate"
     name = "UpdateLevel"
-    value = ""
+    value = "minor"
   }
 
   setting {
