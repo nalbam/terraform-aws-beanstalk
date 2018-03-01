@@ -130,7 +130,7 @@ variable "loadbalancer_type" {
 }
 
 variable "healthcheck_url" {
-  default = "/health"
+  default = ""
   description = "Application Health Check URL. Elastic Beanstalk will call this URL to check the health of the application running on EC2 instances"
 }
 
