@@ -69,7 +69,7 @@ variable "autoscale_upper_bound" {
 }
 
 variable "security_groups" {
-  type = "list"
+  //type = "list"
   //default = []
   description = "List of security groups"
 }
