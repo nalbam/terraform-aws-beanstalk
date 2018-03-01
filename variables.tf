@@ -22,6 +22,11 @@ variable "solution_stack_name" {
   description = "Elastic Beanstalk stack, e.g. Docker, Go, Node, Java, IIS. [Read more](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/concepts.platforms.html)"
 }
 
+variable "version_label" {
+  //default = "WebServer"
+  description = "Version label"
+}
+
 variable "wait_for_ready_timeout" {
   default = "20m"
 }

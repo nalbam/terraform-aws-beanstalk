@@ -11,6 +11,7 @@ resource "aws_elastic_beanstalk_environment" "default" {
 
   tier = "${var.tier}"
   solution_stack_name = "${var.solution_stack_name}"
+  version_label = "${var.version_label}"
 
   wait_for_ready_timeout = "${var.wait_for_ready_timeout}"
 
