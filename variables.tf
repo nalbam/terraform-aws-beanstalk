@@ -23,6 +23,7 @@ variable "wait_for_ready_timeout" {
 }
 
 variable "vpc_id" {
+  //default = ""
   description = "ID of the VPC in which to provision the AWS resources"
 }
 
@@ -33,11 +34,13 @@ variable "associate_public_ip_address" {
 
 variable "public_subnets" {
   type = "list"
+  //default = []
   description = "List of public subnets to place Elastic Load Balancer"
 }
 
 variable "private_subnets" {
   type = "list"
+  //default = []
   description = "List of private subnets to place EC2 instances"
 }
 
@@ -63,6 +66,7 @@ variable "autoscale_upper_bound" {
 
 variable "security_groups" {
   type = "list"
+  //default = []
   description = "List of security groups"
 }
 
@@ -71,7 +75,13 @@ variable "instance_type" {
   description = "Instances type"
 }
 
+variable "aws_iam_instance_profile_ec2_name" {
+  //default = ""
+  description = "Instance IAM instance profile name"
+}
+
 variable "keypair" {
+  //default = ""
   description = "Name of SSH key that will be deployed on Elastic Beanstalk and DataPipeline instance. The key should be present in AWS"
 }
 
@@ -103,6 +113,11 @@ variable "ssh_listener_enabled" {
 variable "loadbalancer_type" {
   default = "classic"
   description = "Load Balancer type, e.g. 'application' or 'classic'"
+}
+
+variable "aws_iam_role_service_name" {
+  //default = ""
+  description = "Instance IAM service role name"
 }
 
 variable "loadbalancer_certificate_arn" {
@@ -140,6 +155,11 @@ variable "notification_topic_name" {
   description = "Notification topic name"
 }
 
+variable "aws_iam_role_ec2_id" {
+  //default = ""
+  description = "Notification topic name"
+}
+
 variable "tags" {
   type = "map"
   default = {}
@@ -157,7 +177,7 @@ variable "env_default_value" {
 }
 
 variable "env_vars" {
-  default = {}
   type = "map"
+  default = {}
   description = "Map of custom ENV variables to be provided to the Jenkins application running on Elastic Beanstalk, e.g. `env_vars = { JENKINS_USER = 'admin' JENKINS_PASS = 'xxxxxx' }`"
 }

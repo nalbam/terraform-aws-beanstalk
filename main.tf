@@ -107,7 +107,7 @@ resource "aws_elastic_beanstalk_environment" "default" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name = "IamInstanceProfile"
-    value = "${aws_iam_instance_profile.ec2.name}"
+    value = "${var.aws_iam_instance_profile_ec2_name}"
   }
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
@@ -232,7 +232,7 @@ resource "aws_elastic_beanstalk_environment" "default" {
   setting {
     namespace = "aws:elasticbeanstalk:environment"
     name = "ServiceRole"
-    value = "${aws_iam_role.service.name}"
+    value = "${var.aws_iam_role_service_name}"
   }
   setting {
     namespace = "aws:elasticbeanstalk:healthreporting:system"
@@ -585,4 +585,10 @@ resource "aws_elastic_beanstalk_environment" "default" {
   depends_on = [
     "aws_security_group.default"
   ]
+}
+
+resource "aws_ssm_activation" "ec2" {
+  name = "${var.name}-beanstalk"
+  iam_role = "${var.aws_iam_role_ec2_id}"
+  registration_limit = "${var.autoscale_max}"
 }
