@@ -18,7 +18,7 @@ variable "tier" {
 }
 
 variable "solution_stack_name" {
-  default = ""
+  //default = ""
   description = "Elastic Beanstalk stack, e.g. Docker, Go, Node, Java, IIS. [Read more](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/concepts.platforms.html)"
 }
 
