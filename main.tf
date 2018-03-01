@@ -35,6 +35,7 @@ resource "aws_elastic_beanstalk_environment" "default" {
     name = "ELBSubnets"
     value = "${join(",", var.public_subnet_ids)}"
   }
+
   setting {
     namespace = "aws:autoscaling:updatepolicy:rollingupdate"
     name = "RollingUpdateEnabled"
@@ -56,8 +57,7 @@ resource "aws_elastic_beanstalk_environment" "default" {
     value = "${var.updating_max_batch}"
   }
 
-  ###=========================== Autoscale trigger ========================== ###
-
+  // CPUUtilization, NetworkOut
   setting {
     namespace = "aws:autoscaling:trigger"
     name = "MeasureName"
@@ -68,6 +68,7 @@ resource "aws_elastic_beanstalk_environment" "default" {
     name = "Statistic"
     value = "Average"
   }
+  // Percent, Bytes
   setting {
     namespace = "aws:autoscaling:trigger"
     name = "Unit"
@@ -83,8 +84,6 @@ resource "aws_elastic_beanstalk_environment" "default" {
     name = "UpperThreshold"
     value = "${var.autoscale_upper_bound}"
   }
-
-  ###=========================== Autoscale trigger ========================== ###
 
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
@@ -106,10 +105,11 @@ resource "aws_elastic_beanstalk_environment" "default" {
     name = "EC2KeyName"
     value = "${var.keypair}"
   }
+
   setting {
     namespace = "aws:autoscaling:asg"
     name = "Availability Zones"
-    value = "Any 2"
+    value = "Any"
   }
   setting {
     namespace = "aws:autoscaling:asg"
@@ -126,96 +126,104 @@ resource "aws_elastic_beanstalk_environment" "default" {
     name = "CrossZone"
     value = "true"
   }
+
   setting {
-    namespace = "aws:elb:listener"
+    namespace = "aws:elb:listener:80"
     name = "ListenerProtocol"
     value = "HTTP"
   }
   setting {
-    namespace = "aws:elb:listener"
+    namespace = "aws:elb:listener:80"
     name = "InstancePort"
     value = "80"
   }
   setting {
-    namespace = "aws:elb:listener"
+    namespace = "aws:elb:listener:80"
     name = "ListenerEnabled"
-    value = "${var.http_listener_enabled  == "true" || var.loadbalancer_certificate_arn == "" ? "true" : "false"}"
+    value = "true"
   }
-  setting {
-    namespace = "aws:elb:listener:443"
-    name = "ListenerProtocol"
-    value = "HTTPS"
-  }
-  setting {
-    namespace = "aws:elb:listener:443"
-    name = "InstancePort"
-    value = "80"
-  }
-  setting {
-    namespace = "aws:elb:listener:443"
-    name = "SSLCertificateId"
-    value = "${var.loadbalancer_certificate_arn}"
-  }
-  setting {
-    namespace = "aws:elb:listener:443"
-    name = "ListenerEnabled"
-    value = "${var.loadbalancer_certificate_arn == "" ? "false" : "true"}"
-  }
-  setting {
-    namespace = "aws:elb:listener:${var.ssh_listener_port}"
-    name = "ListenerProtocol"
-    value = "TCP"
-  }
-  setting {
-    namespace = "aws:elb:listener:${var.ssh_listener_port}"
-    name = "InstancePort"
-    value = "22"
-  }
-  setting {
-    namespace = "aws:elb:listener:${var.ssh_listener_port}"
-    name = "ListenerEnabled"
-    value = "${var.ssh_listener_enabled}"
-  }
+
+  //  setting {
+  //    namespace = "aws:elb:listener:443"
+  //    name = "ListenerProtocol"
+  //    value = "HTTPS"
+  //  }
+  //  setting {
+  //    namespace = "aws:elb:listener:443"
+  //    name = "InstancePort"
+  //    value = "80"
+  //  }
+  //  setting {
+  //    namespace = "aws:elb:listener:443"
+  //    name = "SSLCertificateId"
+  //    value = "${var.loadbalancer_certificate_arn}"
+  //  }
+  //  setting {
+  //    namespace = "aws:elb:listener:443"
+  //    name = "ListenerEnabled"
+  //    value = "${var.loadbalancer_certificate_arn == "" ? "false" : "true"}"
+  //  }
+
+  //  setting {
+  //    namespace = "aws:elb:listener:${var.ssh_listener_port}"
+  //    name = "ListenerProtocol"
+  //    value = "TCP"
+  //  }
+  //  setting {
+  //    namespace = "aws:elb:listener:${var.ssh_listener_port}"
+  //    name = "InstancePort"
+  //    value = "22"
+  //  }
+  //  setting {
+  //    namespace = "aws:elb:listener:${var.ssh_listener_port}"
+  //    name = "ListenerEnabled"
+  //    value = "${var.ssh_listener_enabled}"
+  //  }
+
   setting {
     namespace = "aws:elb:policies"
     name = "ConnectionSettingIdleTimeout"
-    value = "${var.ssh_listener_enabled == "true" ? "3600" : "60"}"
+    value = "60"
   }
   setting {
     namespace = "aws:elb:policies"
     name = "ConnectionDrainingEnabled"
     value = "true"
   }
-  setting {
-    namespace = "aws:elbv2:loadbalancer"
-    name = "AccessLogsS3Enabled"
-    value = "true"
-  }
-  setting {
-    namespace = "aws:elbv2:listener:default"
-    name = "ListenerEnabled"
-    value = "${var.http_listener_enabled == "true" || var.loadbalancer_certificate_arn == "" ? "true" : "false"}"
-  }
-  setting {
-    namespace = "aws:elbv2:listener:443"
-    name = "ListenerEnabled"
-    value = "${var.loadbalancer_certificate_arn == "" ? "false" : "true"}"
-  }
-  setting {
-    namespace = "aws:elbv2:listener:443"
-    name = "Protocol"
-    value = "HTTPS"
-  }
-  setting {
-    namespace = "aws:elbv2:listener:443"
-    name = "SSLCertificateArns"
-    value = "${var.loadbalancer_certificate_arn}"
-  }
+
+  //  setting {
+  //    namespace = "aws:elbv2:loadbalancer"
+  //    name = "AccessLogsS3Enabled"
+  //    value = "true"
+  //  }
+
+  //  setting {
+  //    namespace = "aws:elbv2:listener:default"
+  //    name = "ListenerEnabled"
+  //    value = "${var.http_listener_enabled == "true" || var.loadbalancer_certificate_arn == "" ? "true" : "false"}"
+  //  }
+  //  setting {
+  //    namespace = "aws:elbv2:listener:443"
+  //    name = "ListenerEnabled"
+  //    value = "${var.loadbalancer_certificate_arn == "" ? "false" : "true"}"
+  //  }
+  //  setting {
+  //    namespace = "aws:elbv2:listener:443"
+  //    name = "Protocol"
+  //    value = "HTTPS"
+  //  }
+  //  setting {
+  //    namespace = "aws:elbv2:listener:443"
+  //    name = "SSLCertificateArns"
+  //    value = "${var.loadbalancer_certificate_arn}"
+  //  }
+
   setting {
     namespace = "aws:elasticbeanstalk:application"
     name = "Application Healthcheck URL"
-    value = "HTTP:80${var.healthcheck_url}"
+    value = "${var.healthcheck_url}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:environment"
     name = "LoadBalancerType"
@@ -226,16 +234,20 @@ resource "aws_elastic_beanstalk_environment" "default" {
     name = "ServiceRole"
     value = "${var.aws_iam_role_service_name}"
   }
+
   setting {
     namespace = "aws:elasticbeanstalk:healthreporting:system"
     name = "SystemType"
     value = "enhanced"
   }
+
+  // Fixed, Percentage
   setting {
     namespace = "aws:elasticbeanstalk:command"
     name = "BatchSizeType"
     value = "Fixed"
   }
+  // 1, 30
   setting {
     namespace = "aws:elasticbeanstalk:command"
     name = "BatchSize"
@@ -247,29 +259,31 @@ resource "aws_elastic_beanstalk_environment" "default" {
     value = "Rolling"
   }
 
+  // true, false
   setting {
     namespace = "aws:elasticbeanstalk:managedactions"
     name = "ManagedActionsEnabled"
-    value = "true"
+    value = "false"
   }
+  // Sun:10:00, ""
   setting {
     namespace = "aws:elasticbeanstalk:managedactions"
     name = "PreferredStartTime"
-    value = "Sun:10:00"
+    value = ""
   }
 
-  setting {
-    namespace = "aws:elasticbeanstalk:managedactions:platformupdate"
-    name = "UpdateLevel"
-    value = "minor"
-  }
+  // true, false
   setting {
     namespace = "aws:elasticbeanstalk:managedactions:platformupdate"
     name = "InstanceRefreshEnabled"
-    value = "true"
+    value = "false"
   }
-
-  ###===================== Application ENV vars ======================###
+  // minor, ""
+  setting {
+    namespace = "aws:elasticbeanstalk:managedactions:platformupdate"
+    name = "UpdateLevel"
+    value = ""
+  }
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
@@ -282,11 +296,11 @@ resource "aws_elastic_beanstalk_environment" "default" {
     value = "${var.stage}"
   }
 
-  setting {
-    namespace = "aws:elasticbeanstalk:application:environment"
-    name = "CONFIG_SOURCE"
-    value = "${var.config_source}"
-  }
+  //  setting {
+  //    namespace = "aws:elasticbeanstalk:application:environment"
+  //    name = "CONFIG_SOURCE"
+  //    value = "${var.config_source}"
+  //  }
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
@@ -544,21 +558,21 @@ resource "aws_elastic_beanstalk_environment" "default" {
   # http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/environments-cfg-applicationloadbalancer.html
   # http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/environments-cfg-applicationloadbalancer.html#alb-default-process.config
 
-  setting {
-    namespace = "aws:elasticbeanstalk:environment:process:default"
-    name = "HealthCheckPath"
-    value = "${var.healthcheck_url}"
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:environment:process:default"
-    name = "Port"
-    value = "80"
-  }
-  setting {
-    namespace = "aws:elasticbeanstalk:environment:process:default"
-    name = "Protocol"
-    value = "HTTP"
-  }
+  //  setting {
+  //    namespace = "aws:elasticbeanstalk:environment:process:default"
+  //    name = "HealthCheckPath"
+  //    value = "${var.healthcheck_url}"
+  //  }
+  //  setting {
+  //    namespace = "aws:elasticbeanstalk:environment:process:default"
+  //    name = "Port"
+  //    value = "80"
+  //  }
+  //  setting {
+  //    namespace = "aws:elasticbeanstalk:environment:process:default"
+  //    name = "Protocol"
+  //    value = "HTTP"
+  //  }
 
   ###===================== Notification =====================================================###
 

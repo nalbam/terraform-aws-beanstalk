@@ -18,12 +18,12 @@ variable "tier" {
 }
 
 variable "solution_stack_name" {
-  //default = ""
+  //default = "64bit Amazon Linux 2017.09 v2.8.4 running Docker 17.09.1-ce"
   description = "Elastic Beanstalk stack, e.g. Docker, Go, Node, Java, IIS. [Read more](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/concepts.platforms.html)"
 }
 
 variable "version_label" {
-  //default = "WebServer"
+  //default = "First Release"
   description = "Version label"
 }
 
@@ -84,6 +84,11 @@ variable "instance_type" {
   description = "Instances type"
 }
 
+variable "aws_iam_role_service_name" {
+  //default = ""
+  description = "Instance IAM service role name"
+}
+
 variable "aws_iam_instance_profile_ec2_name" {
   //default = ""
   description = "Instance IAM instance profile name"
@@ -104,45 +109,40 @@ variable "autoscale_max" {
   description = "Maximum instances in charge"
 }
 
-variable "http_listener_enabled" {
-  default = "true"
-  description = "Enable port 80 (http)"
-}
+//variable "http_listener_enabled" {
+//  default = "true"
+//  description = "Enable port 80 (http)"
+//}
 
-variable "ssh_listener_port" {
-  default = "22"
-  description = "SSH port"
-}
-
-variable "ssh_listener_enabled" {
-  default = "false"
-  description = "Enable ssh port"
-}
+//variable "ssh_listener_port" {
+//  default = "22"
+//  description = "SSH port"
+//}
+//
+//variable "ssh_listener_enabled" {
+//  default = "false"
+//  description = "Enable ssh port"
+//}
 
 variable "loadbalancer_type" {
   default = "classic"
   description = "Load Balancer type, e.g. 'application' or 'classic'"
 }
 
-variable "aws_iam_role_service_name" {
-  //default = ""
-  description = "Instance IAM service role name"
-}
-
-variable "loadbalancer_certificate_arn" {
-  default = ""
-  description = "Load Balancer SSL certificate ARN. The certificate must be present in AWS Certificate Manager"
-}
-
 variable "healthcheck_url" {
-  default = "/health"
+  default = ""
   description = "Application Health Check URL. Elastic Beanstalk will call this URL to check the health of the application running on EC2 instances"
 }
 
-variable "config_source" {
-  default = ""
-  description = "S3 source for config"
-}
+//variable "loadbalancer_certificate_arn" {
+//  default = ""
+//  description = "Load Balancer SSL certificate ARN. The certificate must be present in AWS Certificate Manager"
+//}
+
+//variable "config_source" {
+//  default = ""
+//  description = "S3 source for config"
+//}
 
 variable "notification_protocol" {
   default = "email"
