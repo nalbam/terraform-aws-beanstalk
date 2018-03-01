@@ -1,5 +1,5 @@
 variable "name" {
-  default = "app"
+  default = "demo"
   description = "Solution name, e.g. 'app' or 'jenkins'"
 }
 

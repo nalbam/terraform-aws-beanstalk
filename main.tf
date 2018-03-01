@@ -581,10 +581,6 @@ resource "aws_elastic_beanstalk_environment" "default" {
     name = "Notification Topic Name"
     value = "${var.notification_topic_name}"
   }
-
-  depends_on = [
-    "aws_security_group.default"
-  ]
 }
 
 resource "aws_ssm_activation" "ec2" {
