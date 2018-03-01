@@ -37,13 +37,13 @@ variable "associate_public_ip_address" {
 }
 
 variable "public_subnets" {
-  //type = "list"
+  type = "list"
   //default = []
   description = "List of public subnets to place Elastic Load Balancer"
 }
 
 variable "private_subnets" {
-  //type = "list"
+  type = "list"
   //default = []
   description = "List of private subnets to place EC2 instances"
 }
@@ -69,7 +69,7 @@ variable "autoscale_upper_bound" {
 }
 
 variable "security_groups" {
-  //type = "list"
+  type = "list"
   //default = []
   description = "List of security groups"
 }
