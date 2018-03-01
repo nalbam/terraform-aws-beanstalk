@@ -583,8 +583,8 @@ resource "aws_elastic_beanstalk_environment" "default" {
   }
 }
 
-resource "aws_ssm_activation" "ec2" {
-  name = "${var.name}-beanstalk"
-  iam_role = "${var.aws_iam_role_ec2_id}"
-  registration_limit = "${var.autoscale_max}"
-}
+//resource "aws_ssm_activation" "ec2" {
+//  name = "${var.name}-beanstalk"
+//  iam_role = "${var.aws_iam_role_ec2_id}"
+//  registration_limit = "${var.autoscale_max}"
+//}
