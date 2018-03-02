@@ -9,7 +9,7 @@ resource "aws_elastic_beanstalk_environment" "default" {
 
   application = "${var.name}"
 
-  cname_prefix = "${var.cname_prefix != "" ? var.cname_prefix : join("-", var.name, var.stage)}"
+  cname_prefix = "${var.cname_prefix}"
 
   version_label = "${var.version_label}"
 
