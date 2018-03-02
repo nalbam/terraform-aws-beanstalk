@@ -9,9 +9,13 @@ resource "aws_elastic_beanstalk_environment" "default" {
 
   application = "${var.name}"
 
-  tier = "${var.tier}"
-  solution_stack_name = "${var.solution_stack_name}"
+  cname_prefix = "${var.cname_prefix == "" ? var.cname_prefix : ${var.name}-${var.stage}}"
+
   version_label = "${var.version_label}"
+
+  tier = "${var.tier}"
+
+  solution_stack_name = "${var.solution_stack_name}"
 
   wait_for_ready_timeout = "${var.wait_for_ready_timeout}"
 
@@ -174,7 +178,7 @@ resource "aws_elastic_beanstalk_environment" "default" {
   //  setting {
   //    namespace = "aws:elb:listener:443"
   //    name = "ListenerEnabled"
-  //    value = "${var.loadbalancer_certificate_arn == "" ? "false" : "true"}"
+  //    value = "${var.loadbalancer_certificate_arn != "" ? "true" : "false"}"
   //  }
 
   //  setting {

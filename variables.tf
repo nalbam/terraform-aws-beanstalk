@@ -9,7 +9,12 @@ variable "name" {
 
 variable "stage" {
   default = "dev"
-  description = "Stage, e.g. 'prod', 'staging', 'dev', or 'test'"
+  description = "Stage, e.g. 'prod', 'dev', 'stage', or 'test'"
+}
+
+variable "cname_prefix" {
+  default = ""
+  description = "Prefix to use for the fully qualified DNS name of the Environment."
 }
 
 variable "tier" {
