@@ -12,6 +12,16 @@ variable "stage" {
   description = "Stage, e.g. 'prod', 'dev', 'stage', or 'test'"
 }
 
+variable "bucket" {
+  //default = ""
+  description = ""
+}
+
+variable "package" {
+  //default = ""
+  description = ""
+}
+
 variable "cname_prefix" {
   default = ""
   description = "Prefix to use for the fully qualified DNS name of the Environment."
@@ -89,15 +99,15 @@ variable "instance_type" {
   description = "Instances type"
 }
 
-variable "aws_iam_role_service_name" {
-  //default = ""
-  description = "Instance IAM service role name"
-}
+//variable "aws_iam_role_service_name" {
+//  //default = ""
+//  description = "Instance IAM service role name"
+//}
 
-variable "aws_iam_instance_profile_ec2_name" {
-  //default = ""
-  description = "Instance IAM instance profile name"
-}
+//variable "aws_iam_instance_profile_ec2_name" {
+//  //default = ""
+//  description = "Instance IAM instance profile name"
+//}
 
 variable "keypair" {
   //default = ""

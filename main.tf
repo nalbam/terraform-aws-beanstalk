@@ -1,5 +1,22 @@
 # Elastic Beanstalk
 
+resource "aws_elastic_beanstalk_application" "default" {
+  name = "${var.name}"
+}
+
+resource "aws_s3_bucket_object" "default" {
+  bucket = "${var.bucket}"
+  key = "${var.package}"
+  source = "${var.package}"
+}
+
+resource "aws_elastic_beanstalk_application_version" "default" {
+  name = "${var.version_label}"
+  application = "${aws_elastic_beanstalk_application.default.name}"
+  bucket = "${aws_s3_bucket_object.default.bucket}"
+  key = "${aws_s3_bucket_object.default.key}"
+}
+
 #
 # Full list of options:
 # http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/command-options-general.html#command-options-general-elasticbeanstalkmanagedactionsplatformupdate
@@ -7,7 +24,7 @@
 resource "aws_elastic_beanstalk_environment" "default" {
   name = "${var.name}-${var.stage}"
 
-  application = "${var.name}"
+  application = "${aws_elastic_beanstalk_application.default.name}"
 
   cname_prefix = "${var.cname_prefix}"
 
@@ -110,7 +127,7 @@ resource "aws_elastic_beanstalk_environment" "default" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name = "IamInstanceProfile"
-    value = "${var.aws_iam_instance_profile_ec2_name}"
+    value = "${aws_iam_instance_profile.ec2.name}"
   }
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
@@ -224,7 +241,7 @@ resource "aws_elastic_beanstalk_environment" "default" {
   setting {
     namespace = "aws:elasticbeanstalk:environment"
     name = "ServiceRole"
-    value = "${var.aws_iam_role_service_name}"
+    value = "${aws_iam_role.service.name}"
   }
 
   setting {
@@ -349,8 +366,8 @@ resource "aws_elastic_beanstalk_environment" "default" {
   }
 }
 
-//resource "aws_ssm_activation" "ec2" {
-//  name = "${var.name}-beanstalk"
-//  iam_role = "${var.aws_iam_role_ec2_id}"
-//  registration_limit = "${var.autoscale_max}"
-//}
+resource "aws_ssm_activation" "ec2" {
+  name = "${var.name}-beanstalk-ssm-activation"
+  iam_role = "${aws_iam_role.ec2.id}"
+  registration_limit = "${var.autoscale_max}"
+}
