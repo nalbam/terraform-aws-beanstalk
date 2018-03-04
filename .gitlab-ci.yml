@@ -8,6 +8,7 @@ image:
 
 variables:
   PLAN: plan.tfplan
+  VARS: sample.tfvars
 
 stages:
   - plan
@@ -19,8 +20,8 @@ before_script:
 plan:
   stage: plan
   script:
-    - terraform validate
-    - terraform plan -out=$PLAN -var-file=sample.tfvars
+    - terraform validate -var-file=$VARS
+    - terraform plan -out=$PLAN -var-file=$VARS
 
 after_script:
   - ls -alh
