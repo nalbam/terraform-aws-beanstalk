@@ -20,7 +20,7 @@ plan:
   stage: plan
   script:
     - terraform validate
-    - terraform plan -out=$PLAN
+    - terraform plan -out=$PLAN -var-file=sample.tfvars
 
 after_script:
   - ls -alh
