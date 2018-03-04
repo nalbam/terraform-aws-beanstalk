@@ -9,7 +9,8 @@ data "aws_iam_policy_document" "service" {
     principals {
       type = "Service"
       identifiers = [
-        "elasticbeanstalk.amazonaws.com"]
+        "elasticbeanstalk.amazonaws.com"
+      ]
     }
     effect = "Allow"
   }
