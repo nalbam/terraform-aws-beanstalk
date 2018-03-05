@@ -1,5 +1,9 @@
-output "application_name" {
+output "name" {
   value = "${aws_elastic_beanstalk_application.default.name}"
+}
+
+output "version_label" {
+  value = "${aws_elastic_beanstalk_application_version.default.name}"
 }
 
 output "iam_instance_profile_name" {
