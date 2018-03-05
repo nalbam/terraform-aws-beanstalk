@@ -367,7 +367,7 @@ resource "aws_elastic_beanstalk_environment" "default" {
 }
 
 resource "aws_ssm_activation" "ec2" {
-  name = "${var.name}-beanstalk-ssm-activation"
+  name = "${var.name}-${var.stage}-beanstalk-ssm-activation"
   iam_role = "${aws_iam_role.ec2.id}"
   registration_limit = "${var.autoscale_max}"
 }
