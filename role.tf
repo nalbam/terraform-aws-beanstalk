@@ -200,7 +200,7 @@ data "aws_iam_policy_document" "default" {
 #
 
 resource "aws_iam_role" "service" {
-  name = "${var.name}-beanstalk-service-role"
+  name = "terraform-${var.name}-${var.stage}-beanstalk-service-role"
   assume_role_policy = "${data.aws_iam_policy_document.service.json}"
 }
 
@@ -219,7 +219,7 @@ resource "aws_iam_role_policy_attachment" "service" {
 #
 
 resource "aws_iam_role" "ec2" {
-  name = "${var.name}-beanstalk-ec2-role"
+  name = "terraform-${var.name}-${var.stage}-beanstalk-ec2-role"
   assume_role_policy = "${data.aws_iam_policy_document.ec2.json}"
 }
 
@@ -257,12 +257,12 @@ resource "aws_iam_role_policy_attachment" "ssm-automation" {
 }
 
 resource "aws_iam_role_policy" "default" {
-  name = "${var.name}-beanstalk-default-role-policy"
+  name = "terraform-${var.name}-${var.stage}-beanstalk-default-role-policy"
   role = "${aws_iam_role.ec2.id}"
   policy = "${data.aws_iam_policy_document.default.json}"
 }
 
 resource "aws_iam_instance_profile" "ec2" {
-  name = "${var.name}-beanstalk-ec2-instance-profile"
+  name = "terraform-${var.name}-${var.stage}-beanstalk-ec2-instance-profile"
   role = "${aws_iam_role.ec2.name}"
 }
