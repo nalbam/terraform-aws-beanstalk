@@ -78,13 +78,28 @@ variable "updating_max_batch" {
   description = "Maximum count of instances up during update"
 }
 
+variable "autoscale_trigger" {
+  default = "NetworkOut"
+  description = "The measure name associated with the metric the trigger uses. (CPUUtilization, NetworkOut)"
+}
+
+variable "autoscale_statistic" {
+  default = "Average"
+  description = "The statistic that the trigger uses when fetching metrics statistics to examine."
+}
+
+variable "autoscale_unit" {
+  default = "Percent"
+  description = "The standard unit that the trigger uses when fetching metric statistics to examine. (Percent, Bytes)"
+}
+
 variable "autoscale_lower_bound" {
-  default = "20"
+  default = "2000000"
   description = "Minimum level of autoscale metric to add instance"
 }
 
 variable "autoscale_upper_bound" {
-  default = "80"
+  default = "6000000"
   description = "Maximum level of autoscale metric to remove instance"
 }
 

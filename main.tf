@@ -84,22 +84,20 @@ resource "aws_elastic_beanstalk_environment" "default" {
 
   # ========== Autoscaling Trigger ========== #
 
-  // CPUUtilization, NetworkOut
   setting {
     namespace = "aws:autoscaling:trigger"
     name = "MeasureName"
-    value = "CPUUtilization"
+    value = "${var.autoscale_trigger}"
   }
   setting {
     namespace = "aws:autoscaling:trigger"
     name = "Statistic"
-    value = "Average"
+    value = "${var.autoscale_statistic}"
   }
-  // Percent, Bytes
   setting {
     namespace = "aws:autoscaling:trigger"
     name = "Unit"
-    value = "Percent"
+    value = "${var.autoscale_unit}"
   }
   setting {
     namespace = "aws:autoscaling:trigger"
