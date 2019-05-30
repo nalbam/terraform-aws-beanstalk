@@ -9,7 +9,7 @@ data "aws_iam_policy_document" "service" {
     principals {
       type = "Service"
       identifiers = [
-        "elasticbeanstalk.amazonaws.com"
+        "elasticbeanstalk.amazonaws.com",
       ]
     }
     effect = "Allow"
@@ -25,7 +25,7 @@ data "aws_iam_policy_document" "ec2" {
     principals {
       type = "Service"
       identifiers = [
-        "ec2.amazonaws.com"
+        "ec2.amazonaws.com",
       ]
     }
     effect = "Allow"
@@ -38,7 +38,7 @@ data "aws_iam_policy_document" "ec2" {
     principals {
       type = "Service"
       identifiers = [
-        "ssm.amazonaws.com"
+        "ssm.amazonaws.com",
       ]
     }
     effect = "Allow"
@@ -66,7 +66,7 @@ data "aws_iam_policy_document" "default" {
       "autoscaling:DescribeNotificationConfigurations",
     ]
     resources = [
-      "*"
+      "*",
     ]
     effect = "Allow"
   }
@@ -158,7 +158,7 @@ data "aws_iam_policy_document" "default" {
       "codebuild:StartBuild",
     ]
     resources = [
-      "*"
+      "*",
     ]
     effect = "Allow"
   }
@@ -200,17 +200,17 @@ data "aws_iam_policy_document" "default" {
 #
 
 resource "aws_iam_role" "service" {
-  name = "terraform-${var.name}-beanstalk-service-role"
-  assume_role_policy = "${data.aws_iam_policy_document.service.json}"
+  name               = "terraform-${var.name}-beanstalk-service-role"
+  assume_role_policy = data.aws_iam_policy_document.service.json
 }
 
 resource "aws_iam_role_policy_attachment" "enhanced-health" {
-  role = "${aws_iam_role.service.name}"
+  role       = aws_iam_role.service.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSElasticBeanstalkEnhancedHealth"
 }
 
 resource "aws_iam_role_policy_attachment" "service" {
-  role = "${aws_iam_role.service.name}"
+  role       = aws_iam_role.service.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSElasticBeanstalkService"
 }
 
@@ -219,27 +219,27 @@ resource "aws_iam_role_policy_attachment" "service" {
 #
 
 resource "aws_iam_role" "ec2" {
-  name = "terraform-${var.name}-beanstalk-ec2-role"
-  assume_role_policy = "${data.aws_iam_policy_document.ec2.json}"
+  name               = "terraform-${var.name}-beanstalk-ec2-role"
+  assume_role_policy = data.aws_iam_policy_document.ec2.json
 }
 
 resource "aws_iam_role_policy_attachment" "web-tier" {
-  role = "${aws_iam_role.ec2.name}"
+  role       = aws_iam_role.ec2.name
   policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier"
 }
 
 resource "aws_iam_role_policy_attachment" "ecr-readonly" {
-  role = "${aws_iam_role.ec2.name}"
+  role       = aws_iam_role.ec2.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 }
 
 resource "aws_iam_role_policy_attachment" "worker-tier" {
-  role = "${aws_iam_role.ec2.name}"
+  role       = aws_iam_role.ec2.name
   policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkWorkerTier"
 }
 
 resource "aws_iam_role_policy_attachment" "ssm-ec2" {
-  role = "${aws_iam_role.ec2.name}"
+  role       = aws_iam_role.ec2.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
 
   lifecycle {
@@ -248,7 +248,7 @@ resource "aws_iam_role_policy_attachment" "ssm-ec2" {
 }
 
 resource "aws_iam_role_policy_attachment" "ssm-automation" {
-  role = "${aws_iam_role.ec2.name}"
+  role       = aws_iam_role.ec2.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonSSMAutomationRole"
 
   lifecycle {
@@ -257,12 +257,12 @@ resource "aws_iam_role_policy_attachment" "ssm-automation" {
 }
 
 resource "aws_iam_role_policy" "default" {
-  name = "terraform-${var.name}-beanstalk-default-role-policy"
-  role = "${aws_iam_role.ec2.id}"
-  policy = "${data.aws_iam_policy_document.default.json}"
+  name   = "terraform-${var.name}-beanstalk-default-role-policy"
+  role   = aws_iam_role.ec2.id
+  policy = data.aws_iam_policy_document.default.json
 }
 
 resource "aws_iam_instance_profile" "ec2" {
   name = "terraform-${var.name}-beanstalk-ec2-instance-profile"
-  role = "${aws_iam_role.ec2.name}"
+  role = aws_iam_role.ec2.name
 }
